@@ -1,0 +1,30 @@
+Ej 1
+A) 32 bits
+B) 8 bits / 1 byte
+C) hay 8 registros de 32 bits
+D) Guarda un puntero a la siguiente instrucción y tiene 32 bits
+E) Porque el tamaño de las direcciones es de 32 bits
+
+Ej2
+A) Reporta el estado del programa siendo ejecutado y permite control limitado del proceso. Su tamaños es de 32 bits
+B)
+11 indica que hay overflow
+7  indica su signo
+9  indica si se permiten o no interrupciones
+
+C) Los 32 mas significativos son reservados y los 32 menos significativos se usan de igual forma que los EFLAGS
+
+Ej3
+
+A) Soporta el procesamiento o llamado de subrrutinas y pasaje de parámetros
+B) Está en la memoria
+
+
+A) Señala el tope del stack/donde arranca. Donde se va guardar lo proximo a pushear.
+B) Es el punto de retorno del ESP.
+C) Se pushea el EIP al stack para saber a qué instrucción volver.
+D) Popea el valor guardado en el CALL y lo guarda en el EIP.
+E) El stack pointer debe estar apuntando al return-instruction pointer en la pila antes de hacer la llamada a RET.
+   Lo asegura dejando el EIP en el EBP, ya que éste apunta  aun lugar en especifico y el EIP se guarda ahi. Hay mas formas.
+F) 32 y 64 respectivamente
+G) Sí pero no resulta una buena practica, además habría que asegurar lo del punto E de otra forma.
