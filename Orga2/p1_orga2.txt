@@ -35,6 +35,6 @@ el maximo que puede ser usado es una doubleword(2 ala 32)
 ** en arq de 32 tengo 8 registros y en arq de 64 tengo 16 registros
 --------------------------------------------
 DEC:
-a) recibe 1 operando del tipo registro/memoria de 8 a 64 bits y perserva el estado de los flag
+a) recibe 1 operando del tipo registro/memoria de 8 a 64 bits y perserva el estado de los flag CF y cambia OF, SF, ZF, AF, y PF flags segun el resultado
 b) decrementa al r/m en 1
-c)
+c) DEC EAX 
