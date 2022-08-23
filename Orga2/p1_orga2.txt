@@ -1,0 +1,40 @@
+datos:
+r/m8 : hace referencia al registro/memoria de 8 bits
+usar REX.R premite acceder a los registros adicionales R8-R15
+
+1 BYTE = 8 BITS
+1 WORD       = 2 BYTES = 16 BITS
+1 DOUBLEWORD = 4 BYTES = 32 BITS
+1 QUADWORD   = 8 BYTES = 64 BITS
+
+----------------------------------------------
+3.4.1 Registros de proposito general 32-bits
+
+los registros dfe prop gral de 32-bits EAX, EBX, ECX, ESI, EDI, EBP sostienen:
+*) operandos de logica y operaciones aritmeticas
+*) operandos para calculos de direcciones
+*) punteros a memoria
+//todos estos estan disponibles para el almacenamiento gral de operandos, resultados y punteros
+PERO se debe tener cuidado con el registro ESP que contiendo el punte de la pila (STACK) que no se debe usar para otro proposito
+
+ untero al dato de la pila
+
+**) Los prefijos REX se utilizan para generar tamaños de operandos de 64 bits o 
+a los registros referencia R8-R15.
+
+**) EIP : contiene el offser al actual segmento de codigo para la siguiente instruccion a ser ejecutada
+
+**) 
+Por ejemplo, la siguiente instrucción ADD suma un valor inmediato de 14
+al contenido del registro EAX:
+ADD EAX, 14
+
+**) en todas las instruccionbes aritmeticas ( no div y IDIV) la fuente siempre suele ser un valor immediato
+el maximo que puede ser usado es una doubleword(2 ala 32)
+
+** en arq de 32 tengo 8 registros y en arq de 64 tengo 16 registros
+--------------------------------------------
+DEC:
+a) recibe 1 operando del tipo registro/memoria de 8 a 64 bits y perserva el estado de los flag
+b) decrementa al r/m en 1
+c)
