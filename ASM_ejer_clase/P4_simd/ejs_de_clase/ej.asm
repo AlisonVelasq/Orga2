@@ -1,6 +1,36 @@
+;//== Suma Uno ==
+
+section .rodata
+uno: times 8 dw 1
+
+section .text
+
+suma1: ;rdi = vector, rsi = resultado, dx = n
+    push rbp
+    mov rbp, rsp
+    
+    movzx rcx, dx
+    shr ecx, 3         ; divido por 8
+    movdqu xmm8, [uno] ; xmm8 = |1|1|1|1|1|1|1|1|
+    .ciclo:
+        movdqu xmm0, [rdi] ; xmm0 = | d7 | d6 | d5 | d4 | d3 | d2 | d1 | d0 |
+        paddw xmm0, xmm8 ; xmm0 = |d7+1|d6+1|d5+1|d4+1|d3+1|d2+1|d1+1|d0+1|
+        movdqu [rsi], xmm0
+        add rdi, 16
+        add rsi, 16
+    loop .ciclo
+    
+    pop rbp
+    ret
+
 ; // == Suma Dos == 
 ; // Dado un vector de $n$ enteros con signo de 16 bits. Incrementa en 2 unidades cada uno y almacena el resultado en un vector de 32 bits ($n \equiv 0$ $(mod\ 8)$)
 ; extern void suma2(int16_t *vector, int32_t *resultado, uint8_t n);
+
+
+
+
+
 
 ; // == Suma Tres ==
 ; // Dado un vector de $n$ enteros con signo de 16 bits. Incrementa en 3 unidades cada uno y almacena el resultado en el mismo vector de forma saturada ($n \equiv 0$ $(mod\ 8)$)
