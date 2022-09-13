@@ -1,17 +1,21 @@
 ;//== Suma Uno ==
-
+; Dado un vector de n enteros sin signo de 16 bits. Incermenta en 1 cada uno y almacena el resultado en un vector de 16 bits
+; exter void suma1(uint16_t *vector, uint 16_t *resultado, uint8_t n)
 section .rodata
 uno: times 8 dw 1
 
 section .text
 
 suma1: ;rdi = vector, rsi = resultado, dx = n
+    ;armo el stackframe
     push rbp
     mov rbp, rsp
     
-    movzx rcx, dx
-    shr ecx, 3         ; divido por 8
+    movzx rcx, dx ;extiendo el valor de rdi con ceros a rcx, este es el contador
+    shr ecx, 3  ; divido por 8(?) por que vamos a recorrer de a 8
+    ;no entiendo el shr
     movdqu xmm8, [uno] ; xmm8 = |1|1|1|1|1|1|1|1|
+    ;por que no pusheo xmm8?
     .ciclo:
         movdqu xmm0, [rdi] ; xmm0 = | d7 | d6 | d5 | d4 | d3 | d2 | d1 | d0 |
         paddw xmm0, xmm8 ; xmm0 = |d7+1|d6+1|d5+1|d4+1|d3+1|d2+1|d1+1|d0+1|
@@ -27,18 +31,95 @@ suma1: ;rdi = vector, rsi = resultado, dx = n
 ; // Dado un vector de $n$ enteros con signo de 16 bits. Incrementa en 2 unidades cada uno y almacena el resultado en un vector de 32 bits ($n \equiv 0$ $(mod\ 8)$)
 ; extern void suma2(int16_t *vector, int32_t *resultado, uint8_t n);
 
+;como el vector resultado es de 32 bits, cuando levante info del vector de 16 bits( 1word)
+;i.e vamos a levantar 8 valores de a word, esto en 32 bits va arepresentar 2 registros, asi que
+;el la operatoria vamos a tener que levantar solo una cosa trasformarla y escribir dos cosas
+;ya que vamos a tener que escribir la parte baja y la parte alta del registro
 
+section .rodata
+dos: times 4 dw 2
 
+section .text
 
+suma2: ;rdi = vector, rsi = resultado, dx = n
+    ;armo el stackframe
+    push rbp
+    mov rbp, rsp
+
+    movzx rcx, dx
+    shr ecx, 2 ;divido por 4, pq vamos a recorrer de a 4
+    movdqu xmm8, [dos] ; levanto la mitad del registro, ie de a 4 words 
+    ;xmm8 = |2|2|2|2
+    .ciclo
+    ;levanto los primeros valores del vector
+    ;lo levantamos como word y lo extedemos a dword con signo
+        pmovsxwd xmm0, [rdi] ;xmm0 = d3|d2|d1|d0
+
+        paddd xmm0, xmm8     ;xmm0 = d3+2|d2+2|d1+2|d0+2
+        movdqu [rsi], xmm0
+        add rdi, 8 ;por que me muevo de a 4 word
+        add rsi, 16 ;pq estamos escribiemdo 124 bit ie 16 bytes
+    loop .ciclo
+
+    pop rbp
+    ret
 
 
 ; // == Suma Tres ==
 ; // Dado un vector de $n$ enteros con signo de 16 bits. Incrementa en 3 unidades cada uno y almacena el resultado en el mismo vector de forma saturada ($n \equiv 0$ $(mod\ 8)$)
 ; extern void suma3(int16_t *vector, uint8_t n);
 
+section .rodata
+tres: times 4 dw 2
+
+section .text
+
+suma3: ;rdi = vector, rsi = n
+    ;armo el stackframe
+    push rbp
+    mov rbp, rsp
+
+    movzx rcx, si
+    shr ecx, 3 ;divido por 8
+    movdqu xmm8, [tres] ; xmm8 = |3|3|3|3|3|3|3|3|
+    .ciclo
+        movdqu xmm0, [rdi] ; xmm0 = |d7|d6|d5|d4|d3|d2|d1|d0
+        ;suma saturada, suma de forma saturada con sigdo words (ie no va a pasar del max representable en 16 bits)
+        paddsw xmm0, xmm8  ; xmm0 = |d7+7|d6+7|d5+7|d4+7|d3+7|d2+7|d1+7|d0+7
+        movdqu [rdi], xmm0 
+        add rdi, 16
+    loop .ciclo
+
+    pop rbp
+    ret
+
 ; // == Incrementar Brillo ==
 ; // Dado una imagen 128x128 pixeles de un byte en escala de grises. Incrementar el brillo de la misma en 10 unidades.
 ; extern void incrementarBrillo10(uint8_t *imagen);
+;queremos que cuando este saturada tome el max valor y no pase a ser imagen negra
+
+section .rodata
+diez: times 16 db 10
+
+section .text
+
+incrementarBrillo10: ; rdi = imagen
+  push rbp
+  mov rbp,rsp
+
+  mov rcx, (32*32 >> 4) ; cant de iteraciones
+  movdqu xmm8, [diez] ; xmm0 = |10|10|...|10|10|
+
+  .ciclo:
+    movdqu xmm0, [rdi]  ; xmm0 = | d15 | ... | d0 |
+    ;suma satura sin signo en 8 bits ( de a byte)
+    paddusb xmm0, xmm8  ; xmm0 = | d15+10 | ... | d0+10 |
+    movdqu [rdi], xmm0
+    add rdi, 16
+  loop .ciclo
+
+  pop rbp
+ret
 
 ; // == Normalizar Vector ==
 ; // Dado un vector de 128 valores positivos en punto flotante de 32 bits. Normalizar los mismos y almacenar el resultado en el mismo vector.
