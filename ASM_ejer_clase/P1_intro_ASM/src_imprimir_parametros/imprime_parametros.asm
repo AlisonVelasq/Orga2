@@ -32,7 +32,7 @@ imprime_parametros:
 	mov rdi, formato_printf
 	; mov xmm0, xmm0
 	mov rax, 1 ;mas adelante se aclara
-	call printf
+	call printf ; para llamar a una funcion es muy importante que este alineada a 16 bytes
 
 	; Fin
 	pop rbp

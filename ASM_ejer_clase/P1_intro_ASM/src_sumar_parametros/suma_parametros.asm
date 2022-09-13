@@ -14,7 +14,7 @@ suma_parametros:
 	add eax, [rbp + 16] ; a6
 	sub eax, [rbp + 24] ; a7
 	;explicacion pila
-	
+	;rbp+8 =rip, rbp +16 =primer elem de la pila
 	; fin
 	pop rbp
 	ret
