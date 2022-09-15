@@ -60,7 +60,7 @@ strCmp:
     pop rbp
 	ret
 
-; char* strClone(char* a)
+; char* strClone(char* a) en rdi esta el puntero al string
 strClone:
     ;prologo 
 	push rbp
@@ -72,14 +72,14 @@ strClone:
     call strLen
     add rax, 1
     mov rdi, rax
-    call malloc
+    call malloc ;reservo memoria para el string
 
-    mov r8, rax
+    mov r8, rax ;el puntero a la memoria reservada CREO:(no tiene uqe ve rcon la pila, solo reserva en memoria prin)
 
-    mov rdi, r12
+    mov rdi, r12 ;puntero
 
 .clonar:
-    mov cl, [rdi]
+    mov cl, [rdi] 
     mov [r8], cl
     cmp cl, 0
     je .fin
