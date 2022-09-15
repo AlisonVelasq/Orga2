@@ -7,6 +7,7 @@ suma:
 
 	; short suma(short* vector, short n);
 
+	; short = entero de 2 bytes
 	; short* vector -> RDI
 	; short n -> SI
 
