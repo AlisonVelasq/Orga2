@@ -28,11 +28,11 @@ alternate_sum_4:
 	;con el push de RIP como efecto del CALL queda alineada a 8
 	sub rdi, rsi
 	add rdi, rdx
-	sub rdi, rci
+	sub rdi, rcx
 	mov rax, rdi
 
 	;epilogo
-	; COMPLETAR 
+	; COMPLETAR
 	pop rbp
 	ret
 
@@ -82,8 +82,8 @@ alternate_sum_8:
 	sub edi, ecx
 	add edi, r8d
 	sub edi, r9d
-	add rdi, [rbp - 16 - 4]
-	sub rdi, [rbp - 16 - 8] ; está mal este y el de arriba
+	add edi, [rbp + 16]
+	sub edi, [rbp + 24]
 	mov eax, edi
 
 	;epilogo
@@ -95,6 +95,16 @@ alternate_sum_8:
 ;void product_2_f(uint32_t * destination, uint32_t x1, float f1);
 ;registros: destination[?], x1[?], f1[?]
 product_2_f:
+	;prologo
+	push rbp 
+    mov rbp,rsp
 
+	cvtsi2ss xmm1, esi ;convierte de int a float y guarda en el primer operando
+	mulss xmm0, xmm1
+	cvttss2si ecx, xmm0 ;convierte de float a int y guarda en el primer operando
+	mov [rdi], ecx
+
+	;epilogo
+	pop rbp
 	ret
 

@@ -17,10 +17,10 @@ bytes y se preserva los valores de los registros no volátiles.
 	epilogo: es donde restauramos los valores de los registros no
 volátiles y devolvemos la pila a su estado inicial.
 
-4)
+4) Dejar espacio en el stack para guardar memoria y registros
 
-5)	A 16 bytes. Deberí ser 16 bytes según tenemos entendido.
+5) A 16 bytes. A 8.
 
-6)	El contrato tiene que seguir siendo respetado. Si por un cambio de parámetros queda desalineado el stack, lo tiene que alinear. Hay que actualizar nuestro programa para que funcione con los nuevos parámetros/tipos.
+6) El contrato tiene que seguir siendo respetado. Si por un cambio de parámetros queda desalineado el stack, lo tiene que alinear. Hay que actualizar nuestro programa para que funcione con los nuevos parámetros/tipos.
 
 

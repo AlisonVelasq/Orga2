@@ -1,0 +1,26 @@
+checkpoint 1)
+1)Convención es la forma de realizar y pasar información entre funciones de usuario
+	-Uno para 64 bits, que utiliza los registros de propósito general
+	y la pila. Y otr para 32 bits, que sólo utiliza la pila.
+	-En x86-64/Linux (64bits) se denomina System V AMD64
+	ABI. En x86/Linux (32bits) se conoce como System V i386 ABI.
+	
+	
+2) En c el compilador. En asm el programador.
+
+3) Stack frame: A la región de la pila comprendida entre los parámetros recibidos y
+el tope de pila actual le llamaremos stack frame.
+
+	prologo: es donde se reserva espacio en la pila para datos
+temporales, se agrega padding para mantenerla alineada a 16
+bytes y se preserva los valores de los registros no volátiles.
+	epilogo: es donde restauramos los valores de los registros no
+volátiles y devolvemos la pila a su estado inicial.
+
+4)
+
+5)	A 16 bytes. Deberí ser 16 bytes según tenemos entendido.
+
+6)	El contrato tiene que seguir siendo respetado. Si por un cambio de parámetros queda desalineado el stack, lo tiene que alinear. Hay que actualizar nuestro programa para que funcione con los nuevos parámetros/tipos.
+
+
