@@ -10,7 +10,7 @@ extern int sumarenteros(int entero_1, int entero_2);
 int main(int argc, char *argv[])
 {		
 	//llamo a la funcion de ASM desde C
-	int rta = sumarenteros(10,5);
+	int rta = sumarenteros(10,5); //me devuelve lo que esta en eax
 	printf("La respuesta es %d \n", rta);
 	return 0;
 }
