@@ -3,7 +3,7 @@ extern malloc
 global codificacion_cesar
 
 section .data
-    ;formato_printf: db 'el string en cod cesar es: %c %c %c %c', 10, 0 ;
+    vec: db 1, 1, 1, 1, 1, 1
 
 
 ;el puntero al string esta en rdi, n en rsi y tam en rdx
