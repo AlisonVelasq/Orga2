@@ -4,7 +4,7 @@
 typedef struct nodo{
 	int dato;              //off 0 (ocupa 4B)
 	struct nodo *prox;     //off 8 (ocupa 8B)
-}nodo_t;                   //size 16
+}nodo_t;                   //size 16, mas padding
 
 typedef struct lista{
 	nodo_t *primero;  //off 0 (ocupa 8B)
