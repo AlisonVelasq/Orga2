@@ -16,10 +16,10 @@
 //*************************************
 
 typedef struct str_array {
-	uint8_t size;
-	uint8_t capacity;
-	char** data;
-} str_array_t;
+	uint8_t size;     //off 0 -> 1 byte
+	uint8_t capacity; //off 1 -> 2 byte
+	char** data;      //off 2 -> 3 byte
+} str_array_t;  //3 bytes
 
 
 //*******************************

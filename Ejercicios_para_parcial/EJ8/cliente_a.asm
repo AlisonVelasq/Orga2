@@ -1,4 +1,4 @@
-%DEFINE RANDOM 1
+%DEFINE RANDOM 0
 
 extern malloc
 
