@@ -20,9 +20,9 @@ codificacion_cesar:
 
     mov ecx, edx
     .cycle: ;rdx --> dl en 1 byte
-        mov dl, [r9]
+        mov dl, [r8]
         add rdx, rsi
-        mov [r8], dl
+        mov [r9], dl
         
         add r9, 1
         add r8, 1
