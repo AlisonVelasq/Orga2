@@ -1,0 +1,50 @@
+
+ASM = $(wildcard *.asm)
+ASM_O = $(ASM:.asm=.o)
+
+main: ${ASM} *c
+	make ${ASM_O}
+	gcc -g -ggdb *.c *.o -o ejec -lm -no-pie
+
+%.o: %.c
+	gcc -g -ggdb -lm -no-pie -c -o $@ $<
+
+%.o: %.asm
+	nasm -f elf64 -F DWARF $< -g
+
+clean:
+	-rm -f *.o ejec
+# CC=c99
+# CFLAGS= -Wall -Wextra -pedantic -O0 -g -lm -Wno-unused-variable -Wno-unused-parameter -no-pie
+# NASM=nasm
+# NASMFLAGS=-f elf64 -g -F DWARF
+
+# all: main tester
+
+# OBJS := ej1_c.o ej1_asm.o str.o 
+# tester: tester.c $(OBJS)
+# 	$(CC) $(CFLAGS) $^ -o $@
+
+# main: main.c $(OBJS)
+# 	$(CC) $(CFLAGS) $^ -o $@
+
+# ej1_c.o: ej1.c ejs.h
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+# ej1_asm.o: ej1.asm ejs.h
+# 	$(NASM) $(NASMFLAGS) $< -o $@
+
+# str.o: str.c str.h
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+
+# # ej2_c.o: ej2.c ejs.h
+# # 	$(CC) $(CFLAGS) -c $< -o $@
+
+# # ej2_asm.o: ej2.asm ejs.h
+# # 	$(NASM) $(NASMFLAGS) $< -o $@
+# clean:
+# 	rm -f *.o
+# 	rm -f main tester
+# 	rm -f salida.propios.*
+

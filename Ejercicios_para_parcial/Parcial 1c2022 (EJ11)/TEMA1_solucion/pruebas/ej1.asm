@@ -28,24 +28,22 @@ strArrayNew:
 
     mov r12b, dil ;guardo mi capacity
 
+    xor rdi, rdi
     ;reservo memoria para el struct
     mov rdi, 16
     call malloc
     mov rbx, rax ; puntero al struct
 
     ;reservo memoria para el array de strings
-    xor rdi, rdi
-    shl r12, 3 ; multiplica por 8
-    mov rdi, r12
-    
+
+    mov dil, r12b
     call malloc ; el puntero a los 4 bytes esta en rax
     ;por cada uno de esos bytes deberia reservar la cant de chars que va a tener cada uno de mis string?
 
     ;pongo los valores de la struct
     mov byte [rbx], 0 ;no tengo ningun elemto ocupado en el array
-    shr r12, 3
-    mov byte [rbx+1], r12b
-    mov [rbx+8], rax ; el puntero a mi vector de strings
+    mov [rbx+1], r12b
+    mov [rbx+2], rax ; el puntero a mi vector de strings
 
     mov rax, rbx
 

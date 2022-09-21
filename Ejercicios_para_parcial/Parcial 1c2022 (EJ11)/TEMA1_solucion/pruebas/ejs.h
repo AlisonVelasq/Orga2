@@ -20,7 +20,7 @@ typedef struct str_array {
 	uint8_t capacity; //off 1 -> 2 byte
 	char** data;      //off 2 -> 3 byte
 } str_array_t;  //3 bytes
-//el struct esta alineado a 16
+
 
 //*******************************
 //Declaración de funciones de ej1
