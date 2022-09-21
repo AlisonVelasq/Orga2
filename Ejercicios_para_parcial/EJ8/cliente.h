@@ -10,7 +10,7 @@ typedef struct cliente_str {    //tengo un vector de char(1 byte), entonces teng
     char apellido[NAME_LEN];    // +21 -->(+42)
     uint64_t compra;            // + 6 bytes (padding para que este alineado a 8) +8 bytes --> 56
     uint32_t dni;               //+4 (4 bytes + 4 padding)
-} cliente_t; //en total 60 + 8 (para alinear el struc) --> 64 bytes
+} cliente_t; //en total 60 + 4 (para alinear el struc) --> 64 bytes
 //el tamaño del struct tiene que estar alineado al elem mas grande(8 bytes)
 
 typedef struct __attribute__((__packed__)) packed_cliente_str {

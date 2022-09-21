@@ -2,7 +2,7 @@
 
 //la diea es que me devuelva un puntero al cliente al azar que eligio
 
-cliente_t azar(cliente_t arraycliente[3]);
+extern cliente_t* azar(cliente_t arraycliente[3]);
 
 int main(int argc, char* argv){
 
@@ -23,6 +23,19 @@ int main(int argc, char* argv){
     client3.nombre[1] = 'o';
     client3.nombre[2] = 'l';
 
+    client1.apellido[0] = 'x';
+    client1.apellido[1] = 'n';
+    client1.apellido[2] = 'a';
+
+    client2.apellido[0] = 'a';
+    client2.apellido[1] = 'x';
+    client2.apellido[2] = 'a';
+
+    client3.apellido[0] = 'a';
+    client3.apellido[1] = 'n';
+    client3.apellido[2] = 'x';
+    client3.apellido[3] = 't';
+
     client1.dni= 20;
     client2.dni = 21;
     client3.dni = 22;
@@ -36,12 +49,14 @@ int main(int argc, char* argv){
     arrayC[1] = client2;
     arrayC[2] = client3;
 
-    cliente_t clienteAzar = azar(arrayC);
+    cliente_t* clienteAzar = azar(arrayC);
 
     //imprimiento valores del cliente
 
-    printf("nombre %s\n", clienteAzar.nombre);
-    printf("DNI: %d\n", clienteAzar.dni);
+    printf("nombre %s\n", (*clienteAzar).nombre);
+    printf("apellido %s\n", (*clienteAzar).apellido);
+    printf("DNI: %d\n", (*clienteAzar).dni);
+    printf("compra: %d\n",(*clienteAzar).compra);
 
 }
 /*
