@@ -17,8 +17,8 @@ int main (void){
 	printf("capacity: %d\n", arrayStr->capacity);
 	printf("size: %d\n", arrayStr->size);
 	
-	//*(arrayStr->data) = "hola";//me apunta al primer string
-	//printf("data: %s\n", *(arrayStr->data)) ;
+	*(arrayStr->data) = "hola";//me apunta al primer string
+	printf("data: %s\n", *(arrayStr->data)) ;
 	return 0;    
 }
 

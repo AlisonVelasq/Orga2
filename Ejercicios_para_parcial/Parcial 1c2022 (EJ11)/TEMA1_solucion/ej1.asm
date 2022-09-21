@@ -49,8 +49,8 @@ strArrayNew:
 
     mov rax, rbx
 
-    push rbx
-    push r12
+    pop rbx
+    pop r12
     pop rbp
     ret
 ; uint8_t  strArrayGetSize(str_array_t* a)
