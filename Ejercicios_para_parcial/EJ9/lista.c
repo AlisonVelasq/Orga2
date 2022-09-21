@@ -14,12 +14,12 @@ int main(int argc, char* argv){
     newnodo = agregarAdelante_asm(3, newnodo);
     newnodo = agregarAdelante_asm(4, newnodo);
 
-    for (int i = 0; i < 4; i++)
-    {
+    int i = 0;
+    while(newnodo != NULL){
+        i++;
         printf("nodo %d : %d\n", i, newnodo->valor);
         newnodo = newnodo->siguiente;
     }
-    
 }
 
 node_t* agregarAdelante(int32_t valor, node_t* siguiente){
