@@ -18,6 +18,7 @@
 typedef struct str_array {
 	uint8_t size;     //off 0 -> 1 byte
 	uint8_t capacity; //off 1 -> 2 byte
+  //mas 6 de padding para que este alineado a 8
 	char** data;      //off 2 -> 3 byte
 } str_array_t;  //3 bytes
 //el struct esta alineado a 16

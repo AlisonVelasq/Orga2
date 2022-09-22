@@ -13,13 +13,29 @@ int main (void){
 	str_array_t* arrayStr = (str_array_t*)malloc(16);
 	//me parece que no es necesario llamar al malloc
 
-	arrayStr = strArrayNew(4);
+	arrayStr = strArrayNew(3);
 	printf("capacity: %d\n", arrayStr->capacity);
 	printf("size: %d\n", arrayStr->size);
 	
-	*(arrayStr->data) = "hola";//me apunta al primer string
-	printf("data: %s\n", *(arrayStr->data)) ;
-	return 0;    
+	arrayStr->data[0] = "hola11111111111";//me apunta al primer string
+	arrayStr->size++;
+	arrayStr->data[1] = "chau xx11111111111111";
+	arrayStr->size++;
+	//arrayStr->data[2] = "mulan";
+	//arrayStr->size++;
+	printf("data: %s\n", arrayStr->data[0]) ;
+	printf("data: %s\n", arrayStr->data[1]) ;
+	printf("data: %s\n", arrayStr->data[2]) ;
+	printf("size: %d\n", arrayStr->size);
+
+	uint8_t s = strArrayGetSize(arrayStr);
+	printf("size2: %d\n", s);
+
+	strArrayAddLast(arrayStr, "mulan");
+	
+	printf("data: %s\n", arrayStr->data[2]) ;
+	printf("size: %d\n", arrayStr->size);  
+	return 0;
 }
 
 

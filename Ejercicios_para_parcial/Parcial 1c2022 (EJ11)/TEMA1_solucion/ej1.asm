@@ -1,7 +1,9 @@
 extern malloc
+
+extern strClone
 global strArrayNew
-; global strArrayGetSize
-; global strArrayAddLast
+global strArrayGetSize
+global strArrayAddLast
 ; global strArraySwap
 ; global strArrayDelete
 
@@ -53,13 +55,76 @@ strArrayNew:
     pop r12
     pop rbp
     ret
+
 ; uint8_t  strArrayGetSize(str_array_t* a)
-; strArrayGetSize:
+;el puntero al vector esta en rdi
+strArrayGetSize:
+    push rbp
+    mov rbp, rsp
+    
+    xor rax, rax
+    mov al, byte [rdi] ;simplemente devuelvo el size
+    ;NO
+    ;tengo que recorrer el vector hasta encontrar un elem vaacio
+    ;mi contador va a estar en rbx
+    ;mov r12, rdi
+    ;.cycle: ;recorro de a 8 bytes, ya que tengo punteros a string
+    ;    cmp [r12], 
+
+    pop rbp 
+    ret
 
 
-; ; void  strArrayAddLast(str_array_t* a, char* data)
-; strArrayAddLast:
+; void  strArrayAddLast(str_array_t* a, char* data)
+;en rdi esta el puntero al struct y en rsi el string
+strArrayAddLast:
+    push rbp 
+    mov rbp, rsp
+    push r12
+    push rbx
+    push r13
+    push r14
 
+    ;recorro el array size veces, hasta llegar al ultimo elem  agregado y 
+    ;agrego el puntero al string, que voy a copiar previamente
+
+    mov r12, rdi
+    mov rbx, rsi
+
+    mov rdi, rbx
+    call strClone ; en rax tengo el puntero al string copiado
+
+    ;ahora recorro el array
+    ;nesecito el puntero al array
+    xor r14, r14
+    mov r14, [r12+8] ; aca esta el puntero al vector
+    ;NO: mov r14, [r14] ;aca deberia estar el puntero al primer string
+    ;de esta forma podria recorrerlo de a 8 bytes
+    
+    ;SI: al parecer no tengo que desreferenciar r14,
+    ;sino que r14 ya me da el vector de dirreciones, si lo desrefencio obtengo ele string
+
+    ;el syze
+    xor r13, r13 
+    mov r13b, byte [r12]
+    ;podria usar strArrayGetSize
+
+    mov rcx, r13
+    .cycle:
+        add r14, 8 ;recorro r13b strings    
+        loop .cycle
+
+    ;r14 ya deberia apuntar al lugar donde quiero agregar un string
+    mov [r14], rax ; apunto a mi string clonado
+    ;ADENTRO de r14 guardo el nuevo puntero
+    add byte [r12], 1 ;le agrego 1 al size
+
+    pop r14
+    pop r13
+    pop r12
+    pop rbx
+    pop rbp 
+    ret
 
 ; ; void  strArraySwap(str_array_t* a, uint8_t i, uint8_t j)
 ; strArraySwap:
