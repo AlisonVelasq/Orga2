@@ -4,7 +4,7 @@ extern strClone
 global strArrayNew
 global strArrayGetSize
 global strArrayAddLast
-; global strArraySwap
+global strArraySwap
 ; global strArrayDelete
 
 ;########### SECCION DE DATOS
@@ -126,9 +126,55 @@ strArrayAddLast:
     pop rbp 
     ret
 
-; ; void  strArraySwap(str_array_t* a, uint8_t i, uint8_t j)
-; strArraySwap:
+; void  strArraySwap(str_array_t* a, uint8_t i, uint8_t j)
+;tengo en rdi a, rsi i, rdx j
+strArraySwap:
+    push rbp 
+    mov rbp, rsp
+    push r12
+    push r13
+    push r14
+    push rbx
+    push r15
+    sub rsp, 8
+    ;tengo que cambiar el string i con el j
 
+    mov r12, rdi
+    ;la idea es guardar en dos registros las direciones de los string y desp solo cambiarlas en el vect
+    
+    ;primero nesecito mi puntero al vector
+    mov r14, [r12+8]
+    mov r15, r14
+    ;mov r16, r14
+    ;busco el string i
+    xor rcx, rcx
+    ;interpreto que mi array empieza en i = 0, si no puedo restar 1 a i
+    mov cl, sil
+    .cycle:
+        add r14, 8 ;sumo las direciones de memoria hasta llegar
+        loop .cycle
+    
+    mov cl, dl 
+    .cycle2:
+        add r15, 8
+        loop .cycle2
+    
+    mov rbx, qword [r14]
+    mov r13, qword [r15]
+
+    mov qword [r14], r13
+    mov qword [r15], rbx
+
+
+
+    add rsp, 8
+    pop r15
+    pop rbx
+    pop r14
+    pop r13
+    pop r12
+    pop rbp 
+    ret
 
 ; ; void  strArrayDelete(str_array_t* a)
 ; strArrayDelete:

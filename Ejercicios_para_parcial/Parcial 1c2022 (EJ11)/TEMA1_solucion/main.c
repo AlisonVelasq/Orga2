@@ -13,7 +13,7 @@ int main (void){
 	str_array_t* arrayStr = (str_array_t*)malloc(16);
 	//me parece que no es necesario llamar al malloc
 
-	arrayStr = strArrayNew(3);
+	arrayStr = strArrayNew(4);
 	printf("capacity: %d\n", arrayStr->capacity);
 	printf("size: %d\n", arrayStr->size);
 	
@@ -21,20 +21,31 @@ int main (void){
 	arrayStr->size++;
 	arrayStr->data[1] = "chau xx11111111111111";
 	arrayStr->size++;
+	arrayStr->data[2] = "mama tqmm";
+	arrayStr->size++;
 	//arrayStr->data[2] = "mulan";
 	//arrayStr->size++;
 	printf("data: %s\n", arrayStr->data[0]) ;
 	printf("data: %s\n", arrayStr->data[1]) ;
 	printf("data: %s\n", arrayStr->data[2]) ;
-	printf("size: %d\n", arrayStr->size);
-
-	uint8_t s = strArrayGetSize(arrayStr);
-	printf("size2: %d\n", s);
-
+	
 	strArrayAddLast(arrayStr, "mulan");
 	
-	printf("data: %s\n", arrayStr->data[2]) ;
+	printf("data: %s\n", arrayStr->data[3]) ;
 	printf("size: %d\n", arrayStr->size);  
+
+	uint8_t i = 1;
+	uint8_t j = 2;
+	strArraySwap(arrayStr, i, j);
+	printf("CON EL SWAP\n");
+	printf("data: %s\n", arrayStr->data[0]) ;
+	printf("data: %s\n", arrayStr->data[1]) ;
+	printf("data: %s\n", arrayStr->data[2]) ;
+	printf("data: %s\n", arrayStr->data[3]) ;
+	printf("size: %d\n", arrayStr->size);  
+
+
+
 	return 0;
 }
 
