@@ -1,0 +1,51 @@
+1)
+Protected mode — This is the native operating mode of the processor. It provides a rich set of architectural
+features, flexibility, high performance and backward compatibility to existing software base.
+
+Real-address mode — This operating mode provides the programming environment of the Intel 8086
+processor, with a few extensions (such as the ability to switch to protected or system management mode)
+
+2)
+Para aprobechar las ventajas de operar en modo protegido.
+Las desventajas son las limitaciones de la falta de privilegios (el real es menos seguro)
+la compatibilidad con otros sistemas (hay compatibilidad hacia atras pero no hacia adelante)
+
+3)
+Es la tabla de descriptor global.
+
+El formato es de 64 bits. bit por bit, conteiene: 0-15 limite del segmento(0 a 15), 16-31 direccion de la base del segmento(bits 0 a 15), 32-39 continuacion direccion base(bits 16 a 23), 40-43 tiene el tipo del segmento, 44 el tipo del descriptor, 45-46 DPL (indicador del privilegio del descriptor), 47 indicador de presencia del segmento, 48-51 limite del segmento (bits 16 a 19), 52 AVL (indicador del disponibilidad de uso por el software del sistema), 53 L (indicador de codigo modo 64 bits en segmento), 54 D/B (tamaño de operacion default), 55 G( indicador de granularidad), 56-63 continuacion de direccion base (bits 34 a 31).
+
+Limit: el máximo offset que puede tener un byte direccionable dentro del segmento, es el tamaño del segmento menos 1
+Base: dirección a partir de la cual se despliega de forma continua el segmento
+G: Esteblece la unidad de medida del campo límite
+if (G = 0) máximo offset = limit
+if (G = 1) máximo offset = limit*0x1000 + 0xFFF
+P: si 1 el segmento esta en la memoria RAM, si es 0 esta en la virtual (swap)
+DPL: nivel de privilegio del segmento
+S: indica si el descriptor de segmento es de sistema o de código/datos
+
+4) 1010
+
+5) (plantilla)
+
+6) 
+extern gdt_entry_t gdt[] : un array con todas las entradas de la gdt
+extern gdt_descriptor_t GDT_DESC : es un descriptor de la gdt, que indica su tamaño y un puntero a la gdt
+
+7, 8 y 9 en código
+
+10) Carga un inmediato de 16 como tamaño de la gdt y uno de 32 contiguo al primero como puntero a la gdt, el registro gdtr. GDT_DESC. En gdt.c.
+
+11 y 12 e código
+
+13) el último bit
+
+15) El segmento de código de lvl 0
+
+16-20 en código
+
+21)
+Se arma un array a la posición de memoria de los ca de la pantalla
+Cada carácter se representa con el struct ca, donde c es el char y a los atributos. Ocupa 2 bytes
+
+22) código
