@@ -20,8 +20,8 @@
 
 typedef struct msg {
 	char * text;	  // off 0 -> 8 bytes
-	size_t text_len;  // off 8 -> 4 bytes //8 BYTES?
-	int tag;          // off 12 -> 4 bytes
+	size_t text_len;  // off 8 -> 8 BYTES
+	int tag;          // off 16 -> 4 bytes
 } msg_t; //la struct acupa 16 bytes y ya esta alineada a 8
 
 //LA STRUCT MIDE 24 NO 16, FIJARTE EN sizeof(msg_t)
@@ -32,5 +32,6 @@ typedef struct msg {
 
 char** agrupar(msg_t* msgArr, size_t msgArr_len);
 char** agrupar_c(msg_t* msgArr, size_t msgArr_len);
+void concatenar(char* sConcatenado, char* text, int text_len, int* indice);
 
 #endif

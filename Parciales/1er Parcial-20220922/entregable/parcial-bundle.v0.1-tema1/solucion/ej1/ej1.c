@@ -1,8 +1,9 @@
 #include "ej1.h"
 
+
 char** agrupar_c(msg_t* msgArr, size_t msgArr_len){
 
-    //tengo que volver un vector de string, donde en cada posicion estaran
+    //tengo que devolver un vector de string, donde en cada posicion estaran
     //los string concatenados (los del tag 0, tag1, etc)
     //el vector a los sumo tiene cant_tag elementos, que para este ejer es 4
 

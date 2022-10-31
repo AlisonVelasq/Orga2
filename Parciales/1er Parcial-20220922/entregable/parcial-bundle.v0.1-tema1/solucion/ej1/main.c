@@ -5,7 +5,7 @@
 #include <assert.h>
 
 #include "ej1.h"
-//#include "ej1.c"
+//#include "ej1.c"//si quiero que ande en c
 
 int main (void){
 	/* Acá pueden realizar sus propias pruebas */
@@ -77,7 +77,7 @@ int main (void){
 	for(int i = 0; i < 6; i++){
 
 		printf("%s \n", vectMsg[i].text);
-		printf("%i \n",vectMsg[i].text_len);
+		printf("%i \n", (int)vectMsg[i].text_len);
 		printf("%i \n", vectMsg[i].tag); 
 	}
 	
