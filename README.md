@@ -7,6 +7,9 @@ https://adventurous-ali-v.notion.site/Orga2-73ff51d2e1ae4aca93c31e3b4b27e4de
 para Simd:
 https://www.officedaytime.com/simd512e/
 
+drive de practicas:
+https://drive.google.com/drive/folders/1qQZRhuYOAZ5yt75XYabLwwTZrd2buzop
+
 otro notion de la teorica:
 https://purring-foundation-c53.notion.site/Resumen-Orga-II-12709accfea94fb499c8a14a756e90eb
 
