@@ -7,9 +7,9 @@ void sumarVectores(char *A, char *B, char *Resultado, int dimension);
 int main(int argc, char const *argv[]){
 
     //char* a = "aaaaaaaa";
-    char a[] = "AAAAAAAAAAAAAAABBBBBBBB";
+    char a[] = "AAAAAAAAAAAAAAABBBBBBBBBBBBBBBB";
     //char* b = "bbbbbbbb";
-    char b[] = "!!!!!!!!!!!!!!!!!!!!!!!";
+    char b[] = "RRRRRR!!!!!!!!!!!!!!!!!!!!!!!!!";
     
     //mis array tienen que ser multiplo de 8
 
@@ -22,6 +22,7 @@ int main(int argc, char const *argv[]){
     sumarVectores(a, b, sumav, dim);
 
     printf("suma: %s\n", sumav);
+    printf("suma: %s\n", a);
 
 
 

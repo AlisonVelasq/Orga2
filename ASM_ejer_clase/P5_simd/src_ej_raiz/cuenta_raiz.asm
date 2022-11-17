@@ -30,7 +30,7 @@ section .text
 			;convierto a double (8 bytes), y ahora splo entran dos elem en le registro
 			cvtps2pd xmm2, xmm0		 ; xmm2 = |    fp3    |    fp2    |
 
-			;multiplicacion de a 8 bytes
+			;multiplicacion de a 8 bytes, de punto flotante
 			mulpd xmm1, xmm8		 ; xmm1 = |    0.3*fp1    |    0.7*fp0    |
 			mulpd xmm2, xmm8		 ; xmm2 = |    0.3*fp3    |    0.7*fp2    |
 

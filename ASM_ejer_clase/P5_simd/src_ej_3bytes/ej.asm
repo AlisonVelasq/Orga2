@@ -22,17 +22,27 @@ ej: ; rdi = a
   movdqu xmm2, [rdi+10*3-16] ; xmm2 = |yyy|yyy|yyy|yyy|yyy|_|
   psrldq xmm2, 1             ; xmm2 = |_|yyy|yyy|yyy|yyy|yyy|
   movdqu xmm3, xmm2          ; xmm3 = |_|yyy|yyy|yyy|yyy|yyy|
+  
+  ;uso el shuf a byte para completar con cero y tener 4 elem de 4 bytes
   pshufb xmm0, xmm8          ; xmm0 = |0xxx|0xxx|0xxx|0xxx| (*)
+  ;el ultimo elem suelto lo guardo solo en un registro xmm0
   pshufb xmm1, xmm9          ; xmm1 = |0000|0000|0000|0xxx|
+  ;hago lo mismo con los 5 elem restantes
   pshufb xmm2, xmm8          ; xmm2 = |0yyy|0yyy|0yyy|0yyy|
   pshufb xmm3, xmm9          ; xmm3 = |0000|0000|0000|0yyy|
+  ;sumo normal con el valor que quedo solo
   paddd  xmm0, xmm1          ; xmm0 = |0xxx|0xxx|0xxx|0xxx+0xxx|
   paddd  xmm2, xmm3          ; xmm2 = |0yyy|0yyy|0yyy|0yyy+0yyy|
 
+
   paddd  xmm0, xmm2          ; xmm0 = |  S3 |  S2 |  S1 |  S0 |
+  ;muevo con el shuf para poder sumar los dos ultimos
   pshufd xmm1, xmm0, 1110b   ; xmm1 = |-----|-----|  S3 |  S2 |
+  ;sumo normal elem a elem
   paddd  xmm0, xmm1          ; xmm0 = |-----|-----|S1+S3|S0+S2|
+  ;corro igual que antes
   pshufd xmm1, xmm0, 0001b   ; xmm1 = |-----|-----|-----|S1+S3|
+  ;sumo elem a elem y listo 
   paddd  xmm0, xmm1          ; xmm0 = |-----|-----|-----|S0+S1+S2+S3|
 
 ;  phaddd xmm0, xmm2          ; xmm0 = |0xxx+0xxx|0xxx+0xxx+0xxx|0yyy+0yyy|0yyy+0yyy+0yyy|
