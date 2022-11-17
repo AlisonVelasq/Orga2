@@ -6,7 +6,7 @@
 section .data
     mask1: dw 0x00, 0x01, 0x04, 0x05, 0x08, 0x09, 0x0C, 0x0D, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF 
     mask2: dw 0x02, 0x03, 0x06, 0x07, 0x0A, 0x0B, 0x0E, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF 
-    mask3: dd 0.25, 0.25, 0.25, 0.25
+    mask3: DQ 0.25, 0.25
 
 ;########### SECCION DE TEXTO (PROGRAMA)
 section .text
@@ -43,7 +43,7 @@ section .text
         
         xor rdi, rdi 
         xor rsi, rsi
-        
+
         mov rcx, r14 
         .ciclo:
             ;tomo de a 8 elem (4 de cada)
@@ -63,21 +63,28 @@ section .text
 
             pmovsxwd xmm1, xmm1 ;  xmm0 = |l3|l2|l1|l0| dwords
             ;sumo los 4 elem
-            phaddw xmm0, xmm0  ; xmm0 = |r3+r2|r1+r0|r3+r2|r1+r0| 
-            phaddw xmm0, xmm0  ; xmm0 = |..doble..|r3+r2+r1+r0|r3+r2+r1+r0| 
-            phaddw xmm1, xmm1  ; xmm0 = |l3+l2|l1+l0|l3+l2|l1+l0|
-            phaddw xmm1, xmm1  ; xmm0 = |..doble..|l3+l2+l1+l0|l3+l2+l1+l0| 
+            phaddd xmm0, xmm0  ; xmm0 = |r3+r2|r1+r0|r3+r2|r1+r0| 
+            phaddd xmm0, xmm0  ; xmm0 = |..doble..|r3+r2+r1+r0|r3+r2+r1+r0| 
+            phaddd xmm1, xmm1  ; xmm0 = |l3+l2|l1+l0|l3+l2|l1+l0|
+            phaddd xmm1, xmm1  ; xmm0 = |..doble..|l3+l2+l1+l0|l3+l2+l1+l0| 
 
-            ;primero expacdo de word a dword ṕor que necesito 4 byytes par convertirloa float
+            ;NO
+            ;primero expando de word a dword ṕor que necesito 4 byytes par convertirloa float
             ;expando con signo
-            cvtdq2ps xmm0, xmm0 ; convierto de dword a float, tengo 4 sumas de tipo float
-            cvtdq2ps xmm1, xmm1 
+            ; cvtdq2ps xmm0, xmm0 ; convierto de dword a float, tengo 4 sumas de tipo float
+            ; cvtdq2ps xmm1, xmm1 
+            
+            ;vonvierto a double por que parece que con float no es suficiente
+            ;ESE no era el problema, asi que no es necesario
+            ;por que sigue habiendo overflow de decimales esta vez?
+            cvtdq2pd xmm0, xmm0 ; convierto de dword a double, tengo 4 sumas de tipo float
+            cvtdq2pd xmm1, xmm1 
 
-            mulps xmm0, xmm2 ; ya estan los primero dos elem multiplicado por 1/4
-            mulps xmm1, xmm2
-            ;   TRUNCADO
-            cvttps2dq xmm0, xmm0 ;pase de float a dword
-            cvttps2dq xmm1, xmm1 
+            mulpd xmm0, xmm2 ; ya estan los primero dos elem multiplicado por 1/4
+            mulpd xmm1, xmm2
+            ;   TRUNCADO,
+            cvttpd2dq xmm0, xmm0 ;pase de double a dword
+            cvttpd2dq xmm1, xmm1 
             ;tengo guardo el resultado en 4 bytes, pero yo nesecito solo pasarle 2 bytes, estonces le paso la parte abbaja low
             ;primero lo guardo en un registro de 32 (4 bytes)
             movd edi, xmm0
