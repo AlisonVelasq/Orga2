@@ -12,6 +12,8 @@ section .text
 %define off_len 8
 %define off_tag 16
 
+%define tam_pointer 8
+
 ;char** agrupar_c(msg_t* msgArr, size_t msgArr_len)
 ; rdi:arr , rsi:len
 agrupar:
@@ -24,7 +26,8 @@ agrupar:
     push r13
     push r14
     push r15
-    sub rsp, 5 ;reservo lugar para guardar la cant de chars x tag
+    
+    sub rsp, 5*8 ;reservo lugar para guardar la cant de chars x tag
 
     mov rbx, rdi
     mov r15, rsi
@@ -35,10 +38,13 @@ agrupar:
 
     ;pongo en cero los contadores de chars
     ;lo hago de esta forma para limpiar todo el registro de la pila y solo tener ceros
-    mov qword [rbp + 16], qword 0
-    mov qword [rbp + 24], qword 0
-    mov qword [rbp + 32], qword 0
-    mov qword [rbp + 40], qword 0
+    mov qword [rsp + 0], qword 0
+    mov qword [rsp + 8], qword 0
+    mov qword [rsp + 16], qword 0
+    mov qword [rsp + 24], qword 0
+    mov qword [rsp + 32], qword 0
+    
+    
 
     ;ciclo para saber cuanto lugar tengo que reservar
 
@@ -70,31 +76,31 @@ agrupar:
         jne .cycler
 
         mov r14, r12
-        mov [rbp+48], byte 0
+        mov [rsp+32], byte 0
+        inc qword [rsp+0]
+        inc qword [rsp+8]
+        inc qword [rbp+16]
+        inc qword [rbp+24]
         jmp .reservar
 
     .mismoTAG:
         mov r8, [r9 + off_len]
-        add [rbp + 16 + 8*r13], r8 ;r13 va de 0 a 3
-        mov rdi, [rbp+16+8*r13]
+        add [rsp + 8*r13], r8 ;r13 va de 0 a 3
+        mov rdi, [rsp+8*r13]
         jmp .volver
 
     
     .reservar: ;reservo los lugares que esta en la pila en el vector final
         xor r13, r13
-        ; mov rdi, qword [rbp+16]
-        ; mov rsi, qword [rbp+24]
-        ; mov rcx, qword [rbp+32]
-        ; mov r13, qword [rbp+40]
+        mov rdi, qword [rsp+0]
+        mov rsi, qword [rsp+8]
+        mov rcx, qword [rsp+16]
+        mov r13, qword [rsp+24]
         ;rever el byte nulo que tiene al final los strings
-        inc qword [rbp+16]
-        inc qword [rbp+24]
-        inc qword [rbp+32]
-        inc qword [rbp+40]
 
         xor rsi, rsi
-        mov rsi, qword [rbp+48]
-        mov r13, qword [rbp + 16 + 8*rsi] ; accedo a la cant a reservar
+        mov rsi, qword [rsp+32]
+        mov r13, qword [rsp + 8*rsi] ; accedo a la cant a reservar
         ;debo evaluar si es cero, ya que si lo es NO RESERVO
         ;cmp r13, 0
         ;je .nada 
@@ -106,8 +112,8 @@ agrupar:
         ;.sig
         add r14, 8 ;paso a la otra direccion del vector
         ;uso la pila para guardar el indice por que no tengo mas no temporales
-        inc dword [rbp+48]
-        mov rsi, [rbp+48]
+        inc dword [rsp+32]
+        mov rsi, [rsp+32]
         
         cmp rsi, MAX_TAGS
         jne .reservar 
@@ -172,13 +178,12 @@ agrupar:
         ; mov rcx, [r12+16]
         ; mov r12, [r12+24]
 
-
-        add rsp, 5
+        add rsp, 5*8 
         pop r15
         pop r14
         pop r13
         pop r12
         pop rbx
-    
+        
         pop rbp
     ret
